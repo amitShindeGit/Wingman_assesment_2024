@@ -1,32 +1,37 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductService from "../services/products";
-import { ProductItem } from "../services/types";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../state-management/hooks/hooks";
+import { addProducts } from "../state-management/slice/products";
 import Card from "./Card";
 import Loader from "./Loader";
-import { useAppSelector } from "../state-management/hooks/hooks";
 
 const Products = () => {
-  // const productState = useAppSelector((state) => state.productState);
-  const [products, setProducts] = useState<ProductItem[] | null>(null);
+  const productState = useAppSelector((state) => state.productState);
+  const { products } = productState;
+  console.log(productState, "prodStateRed");
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setIsLoading(true);
       const data = await ProductService.fetchNpmPackages();
       console.log(data, "data");
-      setProducts(data);
+      dispatch(addProducts(data));
       setIsLoading(false);
     } catch (e) {
       //TODO HANDLE THIS
       console.log(e, "E");
       setIsLoading(false);
     }
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const renderProducts = () => {
     if (isLoading) {
