@@ -2,28 +2,40 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductItem } from "../../../services/types";
 
 interface ProductState {
-  products: ProductItem[] | null;
+  products: ProductItem[];
+  searchInput: string;
+}
+
+interface AddProductsPayload {
+  products: ProductItem[];
+  searchInput: string;
 }
 
 const initialState: ProductState = {
-  products: null,
+  products: [],
+  searchInput: "",
 };
 
 export const productSlice = createSlice({
   initialState,
   name: "productsState",
   reducers: {
-    addProducts: (state, action: PayloadAction<ProductItem[]>) => {
-      state.products = state.products?.length
-        ? [...state.products, ...action.payload]
-        : [...action.payload];
+    addProducts: (state, action: PayloadAction<AddProductsPayload>) => {
+      state.products = [...action.payload.products];
     },
-    filterByName: (state) => {
-      state.products = [];
+    filterProductsByName: (
+      state,
+      action: PayloadAction<AddProductsPayload>
+    ) => {
+      const filteredData = action.payload?.products?.filter((product) =>
+        product?.title?.includes(action.payload?.searchInput)
+      );
+      state.products = state.products ? [...filteredData] : [...state.products];
+      state.searchInput = action.payload?.searchInput;
     },
   },
 });
 
-export const { addProducts, filterByName } = productSlice.actions;
+export const { addProducts, filterProductsByName } = productSlice.actions;
 
 export default productSlice.reducer;

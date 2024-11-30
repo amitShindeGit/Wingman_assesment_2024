@@ -1,11 +1,13 @@
-import Products from "./components/Products";
-import SearchInput from "./components/SearchInput";
+import { Route, Routes } from "react-router";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div className="bg-stone-200">
-      <SearchInput placeHolderText="Search by name..." />
-      <Products />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<h1>Not found </h1>} />
+      </Routes>
     </div>
   );
 }

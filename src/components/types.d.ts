@@ -6,5 +6,6 @@ export interface CardProps {
 
 export interface SearchInputProps {
   placeHolderText?: string;
+  value: string;
   handleChange: (value: string) => void;
 }
