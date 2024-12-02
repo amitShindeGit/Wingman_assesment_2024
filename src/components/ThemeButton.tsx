@@ -36,12 +36,15 @@ const LightIcon = () => (
 
 const ThemeButton = () => {
   const sessionStorageTheme = sessionStorage.getItem("dark") === "true";
-  console.log(sessionStorageTheme, "sessionStorageTheme");
   const [dark, setDark] = useState(sessionStorageTheme);
 
   useLayoutEffect(() => {
-    document.body.classList.toggle("dark");
-  },[]);
+    if (dark) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [dark]);
 
   const toggleTheme = () => {
     const currentTheme = !dark;
@@ -51,7 +54,9 @@ const ThemeButton = () => {
   };
   return (
     <div className="fixed right-5 top-2 z-50">
-      <button onClick={toggleTheme}>{dark ? DarkIcon() : LightIcon()}</button>
+      <button type="button" onClick={toggleTheme}>
+        {dark ? DarkIcon() : LightIcon()}
+      </button>
     </div>
   );
 };

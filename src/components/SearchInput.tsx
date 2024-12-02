@@ -6,7 +6,7 @@ const SearchInput = ({
   handleChange,
 }: SearchInputProps) => {
   return (
-    <form className="max-w-md mx-auto pt-4 pb-4">
+    <div className="max-w-md md:mt-4 mt-4 mx-auto pt-4 pb-4">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -42,7 +42,7 @@ const SearchInput = ({
           }}
         />
       </div>
-    </form>
+    </div>
   );
 };
 

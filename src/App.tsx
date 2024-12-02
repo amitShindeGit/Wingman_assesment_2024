@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import ThemeButton from "./components/ThemeButton";
+import FullPageError from "./components/FullPageError";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <ThemeButton />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="*" element={<h1>Not found </h1>} />
+        <Route path="*" element={<FullPageError title="Page not found" />} />
       </Routes>
     </div>
   );

@@ -9,3 +9,12 @@ export interface SearchInputProps {
   value: string;
   handleChange: (value: string) => void;
 }
+
+export interface GetFilteredAndSortedProductsProps {
+  products?: ProductItem[];
+  searchInput: string;
+  sort: {
+    sortBy: string;
+    order: "asc" | "desc" | "";
+  };
+}
